@@ -19,7 +19,7 @@ export default function SignUp() {
         e.preventDefault()
         console.log(formdata)
         try {
-            const response = await axios.post('api/signup', { formdata })
+            const response = await axios.post('/api/signup', { formdata })
             if (response.data.signUp) {
                 alert('User created Successfully')
             } else {
