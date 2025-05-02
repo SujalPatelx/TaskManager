@@ -1,21 +1,25 @@
 import connectDb from "@/app/lib/db";
 import User from "@/app/modules/user";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-export default async function POST(req: NextApiRequest, res: NextApiResponse) {
-    const { username, password } = await req.body;
+
+export async function POST(req: NextRequest) {
     try {
-        await connectDb();
+        const { formData } = await req.json();
+        const { username, password } = formData
+
         if (username && password) {
-            await User.create({ username, password }).then(() => {
-                res.json({ msg: "SignUp Successfull", signUp: true, });
+            await User.create({ username, password }).then((res) => {
+                NextResponse.json({ msg: "SignUp Successfully", signup: true })
             })
+        } else {
+            NextResponse.json({ msg: 'Failed To SignUp', signup: false })
         }
-        else {
-            res.json({ msg: "Invalid Credentials", signUp: false });
+        if (!username || !password) {
+            NextResponse.json({ msg: 'Invaild Creadential', signup: false })
         }
+
     } catch (err) {
-        console.log('Error While Creating User : ', err);
-        res.json({ msg: 'SignUp Failed', login: false })
+        console.log("Error In Login POST API : ", err)
     }
 }
