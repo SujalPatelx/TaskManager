@@ -14,8 +14,9 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ msg: "Invalid Credentials", signup: false });
         }
 
-        await User.create({ username, password });
-        return NextResponse.json({ msg: "SignUp Successful", signup: true });
+        const newUser = await User.create({ username, password });
+        console.log(newUser)
+        return NextResponse.json({ msg: "SignUp Successful", signup: true, id: newUser._id });
 
     } catch (err) {
         console.log("Error In Signup POST API:", err);
