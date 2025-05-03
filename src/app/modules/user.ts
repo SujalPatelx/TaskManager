@@ -9,6 +9,15 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: false,
         default: ""
+    },
+    taskDate: {
+        type: Date,
+        default: Date.now()
+    },
+    isComplete: {
+        type: Boolean,
+        default: false,
+        required: true
     }
 })
 
