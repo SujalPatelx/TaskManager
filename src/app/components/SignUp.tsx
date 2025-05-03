@@ -2,8 +2,10 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 export default function SignUp() {
+    const router = useRouter();
 
     type FormData = {
         username: string,
@@ -20,7 +22,8 @@ export default function SignUp() {
         try {
             const response = await axios.post('/api/signup', { formdata });
             if (response.data.signup) {
-                alert('User created Successfully');
+                console.log('user created successfully', response.data.id);
+                router.push(`/dashboard/${response.data.id}`);
             } else {
                 alert(response.data.msg || 'Error While Creating User');
             }
