@@ -17,16 +17,16 @@ export default function SignUp() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(formdata)
         try {
-            const response = await axios.post('/api/signup', { formdata })
-            if (response.data.signUp) {
-                alert('User created Successfully')
+            const response = await axios.post('/api/signup', { formdata });
+            if (response.data.signup) {
+                alert('User created Successfully');
             } else {
-                alert('Error While Creating User')
+                alert(response.data.msg || 'Error While Creating User');
             }
         } catch (error) {
-            console.log('error in user post method', error)
+            console.error('Error in user post method:', error);
+            alert('Failed to create user. Please try again.');
         }
     }
 
