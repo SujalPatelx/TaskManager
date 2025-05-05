@@ -37,11 +37,11 @@ export default function TaskInput({ submite }: submiteType) {
                 <form className='w-full flex flex-col gap-6 items-center justify-center' onSubmit={handleSubmit}>
                     <div className='w-full max-w-md'>
                         <label htmlFor="tasktitle" className='text-xl font-normal'>Task Title :</label>
-                        <input onChange={handleChange} type="text" name='tasktitle' id='tasktitle' placeholder='Task Title' className='p-2 bg-gray-300 rounded-lg w-full' />
+                        <input onChange={handleChange} value={formdata.title} type="text" name='title' id='title' placeholder='Task Title' className='p-2 bg-gray-300 rounded-lg w-full' />
                     </div>
                     <div className='w-full max-w-md'>
                         <label htmlFor="taskdes" className='text-xl font-normal'>Task Description :</label>
-                        <input type="text" name='taskdes' id='taskdes' placeholder='Task Description' className='p-2 bg-gray-300 rounded-lg w-full' />
+                        <input type="text" value={formdata.description} onChange={handleChange} name='description' id='description' placeholder='Task Description' className='p-2 bg-gray-300 rounded-lg w-full' />
                     </div>
                     <div className='w-full max-w-md'>
                         <button className='p-2 bg-blue-400 rounded-lg w-full'>Add Task</button>
