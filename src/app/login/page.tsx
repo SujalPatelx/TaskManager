@@ -1,9 +1,10 @@
 import React from 'react'
+import LoginCom from '../components/LoginCom'
 
-const Login = () => {
+export default function Login() {
     return (
-        <div>page</div>
+        <div>
+            <LoginCom />
+        </div>
     )
 }
-
-export default Login
