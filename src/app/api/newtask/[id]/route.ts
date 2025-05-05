@@ -5,20 +5,30 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     try {
         await connectDb();
-        const { title, description, id } = await req.json();
-        if (title && description && id) {
-            const user = await User.findById(id)
-            if (!user) {
-                return NextResponse.json({ msg: 'User Not Founded' })
-            }
-            user.tasks.push({
-                taskTitle: title,
-                taskDes: description
-            })
-            const updatedUser = User.find()
-            return NextResponse.json({ msg: 'Task Added Successfully', updatedUser })
+        const { task } = await req.json();
+        const id = req.url.split('/').pop();
+
+        if (!id) {
+            console.log("Id not found while adding task")
+        } else {
+            console.log('id found')
         }
-    } catch (error) {
-        return NextResponse.json({ msg: 'Somthing Went Wrong In Server Side' })
+        const pushTask = await User.updateOne(
+            { _id: id },
+            {
+                $push: {
+                    tasks: {
+                        taskTitle: task.taskTitle,
+                        taskDes: task.taskDes,
+                        taskDate: new Date()
+                    }
+                }
+            }
+        );
+        const updatedTask = await User.findById(id)
+        return NextResponse.json({ msg: "task added", updatedTasks: updatedTask })
+    } catch (err) {
+        console.log("Somthing Went Wrong In Server Side : ", err)
+        return NextResponse.json({ msg: 'Somthing Went Wrong In Server Side', err })
     }
 }
