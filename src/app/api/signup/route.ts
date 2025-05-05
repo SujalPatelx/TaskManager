@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
         }
 
         const newUser = await User.create({ username, password });
-        console.log(newUser)
         return NextResponse.json({ msg: "SignUp Successful", signup: true, id: newUser._id });
 
     } catch (err) {
