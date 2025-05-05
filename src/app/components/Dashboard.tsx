@@ -11,12 +11,16 @@ type props = {
 type userType = {
     username?: string
 }
+type task = {
+    taskTitle: string,
+    taskDes: string
+}
 
 export default function Dashboard({ id }: props) {
     const [user, setUser] = useState<userType>({})
 
-    const handleSubmit = async (e: FormEvent<HTMLButtonElement>) => {
-        e.preventDefault()
+    const handleSubmit = (task: task) => {
+        console.log('input data : ', task)
     }
 
     useEffect(() => {
@@ -40,7 +44,7 @@ export default function Dashboard({ id }: props) {
     return (
         <div className="min-h-screen bg-gray-100 px-20 pt-6">
             <p className='text-3xl mb-6 font-semibold text-gray-700'>Welcome {user.username}</p>
-            <TaskInput />
+            <TaskInput submite={handleSubmit} />
             <TaskCard />
         </div>
     )
