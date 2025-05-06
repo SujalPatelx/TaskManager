@@ -119,7 +119,7 @@ export default function Dashboard({ id }: props) {
     return (
         <div className="min-h-screen bg-gray-100 px-20 pt-6">
             <ToastContainer />
-            <p className='text-3xl mb-6 font-semibold text-gray-700'>Welcome {user.username}</p>
+            <p className='text-5xl mb-8 font-semibold text-gray-700'>Welcome {user.username}</p>
             <TaskInput submite={handleSubmit} />
             <div className='w-full flex flex-wrap gap-8'>
                 {tasks.map((task) => (
