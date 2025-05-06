@@ -14,6 +14,16 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ msg: "Invalid Credentials", signup: false });
         }
 
+        const existUser = await User.findOne({ username })
+
+        if (existUser) {
+            if (existUser.password === password) {
+                return NextResponse.json({ msg: 'User already exist', signup: false })
+            } else {
+                return NextResponse.json({ msg: 'User name already exist', signup: false })
+            }
+        }
+
         const newUser = await User.create({ username, password });
         return NextResponse.json({ msg: "SignUp Successful", signup: true, id: newUser._id });
 
