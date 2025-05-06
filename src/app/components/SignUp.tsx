@@ -1,5 +1,6 @@
 'use client'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
 import Link from 'next/link'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
@@ -17,6 +18,8 @@ export default function SignUp() {
         password: ""
     })
 
+    const notifyError = (msg: string) => toast.error(msg);
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
@@ -25,7 +28,7 @@ export default function SignUp() {
                 console.log('user created successfully', response.data.id);
                 router.push(`/dashboard/${response.data.id}`);
             } else {
-                alert(response.data.msg || 'Error While Creating User');
+                notifyError(response.data.msg)
             }
         } catch (error) {
             console.error('Error in user post method:', error);
@@ -42,6 +45,7 @@ export default function SignUp() {
 
     return (
         <div className='bg-zinc-800 w-full h-screen flex flex-col items-center justify-center'>
+            <ToastContainer />
             <h1 className='text-6xl text-blue-500 mb-8 font-semibold'>Sign Up</h1>
             <form onSubmit={handleSubmit} className='w-full max-w-md bg-zinc-600 px-6 py-10 rounded-xl flex flex-col gap-4'>
                 <div className='text-zinc-200 flex flex-col'>
