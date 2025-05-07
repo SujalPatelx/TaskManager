@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     try {
+        await connectDb();
         const { taskId, id } = await req.json();
         console.log("Deleting Task Details: ", taskId, id);
 
