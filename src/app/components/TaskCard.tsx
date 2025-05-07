@@ -8,7 +8,7 @@ type taskType = {
     _id?: string
 }
 
-export default function TaskCard({ task, click }: { task: taskType, click: (taskTitle: string, taskDes: string, taskId: string) => void }) {
+export default function TaskCard({ task, editTask, deleteTask }: { task: taskType, editTask: (taskTitle: string, taskDes: string, taskId: string) => void, deleteTask: (taskId: string) => void }) {
 
     function timeAgo(dateString: string): string {
         const date = new Date(dateString);
@@ -32,8 +32,11 @@ export default function TaskCard({ task, click }: { task: taskType, click: (task
 
     const handleEdit = () => {
         if (task._id) {
-            click(task.taskTitle, task.taskDes, task._id)
+            editTask(task.taskTitle, task.taskDes, task._id)
         }
+    }
+    const handleDelete = () => {
+        deleteTask(task._id as string)
     }
 
     return (
@@ -42,7 +45,7 @@ export default function TaskCard({ task, click }: { task: taskType, click: (task
                 <p className='text-2xl text-zinc-800'>{task.taskTitle}</p>
                 <p className='text-lg text-zinc-500'>{task.taskDes}</p>
                 <div className='flex gap-2'>
-                    <button className='mt-4 px-3 py-2 bg-blue-500 rounded-lg text-gray-100 cursor-pointer'>Done</button>
+                    <button className='mt-4 px-3 py-2 bg-blue-500 rounded-lg text-gray-100 cursor-pointer' onClick={handleDelete}>Done</button>
                     <button className='mt-4 px-3 py-2 bg-blue-500 rounded-lg text-gray-100 cursor-pointer' onClick={handleEdit}>Edit</button>
                 </div>
                 <p className='mt-4'>{timeAgo(task.taskDate)}</p>

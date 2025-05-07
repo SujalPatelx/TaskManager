@@ -93,6 +93,19 @@ export default function Dashboard({ id }: props) {
             notifyError("Error While updating")
         }
     }
+    const handleDelete = async (taskId: string) => {
+        try {
+            const response = await axios.post('/api/deletetask', { taskId, id })
+            if (response.data.delete) {
+                notifySuccess(response.data.msg);
+                setTasks(response.data.updatedTasks?.tasks)
+            } else {
+                notifyError(response.data.msg)
+            }
+        } catch (error) {
+            console.log("Error while delete endpoint : ", error)
+        }
+    }
 
     useEffect(() => {
         const fetchUser = async (_id: string) => {
@@ -122,7 +135,7 @@ export default function Dashboard({ id }: props) {
             <TaskInput submite={handleSubmit} />
             <div className='w-full flex flex-wrap gap-8'>
                 {tasks.map((task) => (
-                    <TaskCard key={task._id} task={task} click={onClick} />
+                    <TaskCard key={task._id} task={task} editTask={onClick} deleteTask={handleDelete} />
                 ))}
             </div>
             {show && (
