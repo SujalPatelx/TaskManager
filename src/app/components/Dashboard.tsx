@@ -82,7 +82,6 @@ export default function Dashboard({ id }: props) {
             if (response.data.updated) {
                 notifySuccess(response.data.msg)
                 setShow(false)
-                // Refresh tasks after update
                 const userResponse = await axios.post('/api/users', { userId: id })
                 if (userResponse.data.tasks) {
                     setTasks(userResponse.data.tasks)
